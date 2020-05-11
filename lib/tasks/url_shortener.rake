@@ -2,7 +2,11 @@ namespace :app do
   desc "This task shortens url"
 
   task :encode do
-    ARGV.each  { |a| task a.to_sym do ; end }
-    puts ARGV[1]
+    puts task ARGV[1].to_sym
   end
+
+  task :decode do
+    puts task ARGV[1].to_sym
+  end
+  
 end
