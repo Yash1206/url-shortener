@@ -6,6 +6,15 @@ class Url < ActiveRecord::Base
 
   def create_short_url
     hash = SecureRandom.hex(4)
-    self.shortened = "https://short.is/#{hash}"
+    check_hash_uniqueness(hash)
+  end
+
+  def check_hash_uniqueness(generated_hash)
+    @url = Url.find_by(shortened: "https://short.is/#{generated_hash}")
+    if @url
+      create_short_url
+    else
+      self.shortened = "https://short.is/#{generated_hash}"
+    end
   end
 end
