@@ -2,14 +2,13 @@ class UrlsController < ApplicationController
   def create
     @url = Url.find_by(url_params)
     if @url
-      render status: :ok, json: { success: true, short_url: @url.short_url }
+      render status: :ok, json: { success:true, short_url: @url.short_url }
     else
       @url = Url.new(url_params)
-      @url.create_hash
       if @url.save
-        render status: :created, json: { success: true, short_url: @url.short_url}
+        render status: :ok, json: { success: true, short_url: @url.short_url}
       else
-        render status: :unprocessable_entity, json{ success: false, errors: @url.errors.full_messages }
+        render status: :unprocessable_entity, json: { success: false, errors: "Please input a valid url" }
       end
     end
   end
@@ -29,5 +28,5 @@ class UrlsController < ApplicationController
   def url_params
     params.require(:url).permit(:full_url)
   end
-  
+
 end
