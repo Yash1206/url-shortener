@@ -14,8 +14,7 @@ class UrlsController < ApplicationController
   end
 
   def show
-    @url = Url.find_by(short_url: params[:short_url])
-
+    @url = Url.find_by_short_url(params[:url][:short_url])
     if @url
       render status: :ok, json: { success: true, full_url: @url.full_url }
     else
