@@ -1,24 +1,44 @@
-# README
+# URL shortener API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a url shortener API, build with Ruby On Rails 6.
 
-Things you may want to cover:
+## [](https://github.com/Yash1206/url-shortener#cloning-and-usage)Cloning and Usage
 
-* Ruby version
+-   Clone this repo to your local system.
+-   Execute  `rails db:create`  to create the database.
+-   Execute  `rails db:migrate`  to migrate the database and create tables.
 
-* System dependencies
+## [](https://github.com/Yash1206/url-shortener#testing-the-app)Testing the app
 
-* Configuration
+We have rake tasks to mimic the API calls, to test the app run the following commands on your terminal.
 
-* Database creation
+-   Start your server with  `rails server`.
 
-* Database initialization
+To shorten a URL run following rake task.
 
-* How to run the test suite
+-   `rake app:encode URL=https://test.com`
 
-* Services (job queues, cache servers, search engines, etc.)
+Result will be similar:
 
-* Deployment instructions
+-   The shortened url of  **[https://test.com](https://test.com)**  is  **[https://short.is/tkLo2367](https://short.is/tkLo2367)**
 
-* ...
+To get full_url from short_url run the following rake task.
+
+-   `rake app:decode SHORTURL=https://short.is/tkLo2367`
+
+Result will be similar:
+
+-   The original url of short url  **[https://short.is/tkLo2367](https://short.is/tkLo2367)**  is  **[https://test.com](https://test.com)**
+
+## [](https://github.com/Yash1206/url-shortener#endpoints)EndPoints
+
+Shorten URL:
+
+-   EndPoint -  `/url`, POST
+-   Params - { "url": { "full_url": "https://url.com" } }
+
+Get Full URL from shortened one:
+
+-   EndPoint -  `/show`, GET
+-   Params -  { "url": { "short_url": "https://short.is/#{hex}" } }
+
