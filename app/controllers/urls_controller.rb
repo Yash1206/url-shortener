@@ -1,24 +1,24 @@
 class UrlsController < ApplicationController
-  def create
+  def encode
     @url = Url.find_by(url_params)
     if @url
-      render status: :ok, json: { success:true, short_url: @url.short_url }
+      render status: :ok, json: { short_url: @url.short_url }
     else
       @url = Url.new(url_params)
       if @url.save
-        render status: :ok, json: { success: true, short_url: @url.short_url}
+        render status: :ok, json: { short_url: @url.short_url }
       else
-        render status: :unprocessable_entity, json: { success: false, errors: "Please input a valid url" }
+        render status: :unprocessable_entity, json: { errors: "Please input a valid url" }
       end
     end
   end
 
-  def show
+  def decode
     @url = Url.find_by_short_url(params[:url][:short_url])
     if @url
-      render status: :ok, json: { success: true, full_url: @url.full_url }
+      render status: :ok, json: { full_url: @url.full_url }
     else
-      render status: :not_found, json: { success: false, error: "Not found" }
+      render status: :not_found, json: { error: "Not found" }
     end
   end
 
