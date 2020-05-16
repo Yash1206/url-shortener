@@ -4,7 +4,8 @@ namespace :app do
   task :encode => :environment do
     session.post "http://localhost:3000/url", params: { "url": { "full_url": ENV['URL'] } }
     response = JSON.parse(session.response.body)
-      if response["success"]
+    response_status = session.response.status
+      if response_status == 200
         puts "The shortened url of #{ENV["URL"]} is #{response["short_url"]}."
       else
         puts response["errors"]
@@ -16,7 +17,8 @@ namespace :app do
     short_url = ENV['SHORTURL']
     session.get "http://localhost:3000/show", params: { "url": { "short_url": short_url } }
     response = JSON.parse(session.response.body)
-    if response["success"]
+    response_status = session.response.status
+    if response_status == 200
     puts "The original url of short url #{ENV["SHORTURL"]} is #{response["full_url"]}"
     else
       puts "No original url was found for the  short url #{ENV["SHORTURL"]}"
