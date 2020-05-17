@@ -1,26 +1,28 @@
 class Url < ApplicationRecord
-  before_validation :create_hash
-  validates :full_url, presence: true, uniqueness: true
-  validates_format_of :full_url, :with => /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i
-  validates :short_url, presence: true, uniqueness: true
+  before_validation :hash
+  validates :original, presence: true, uniqueness: true
+  validates_format_of :original, :with => /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i
+  validates :shortened, presence: true, uniqueness: true
 
-  def create_hash
+  private
+
+  def hash
     hash = SecureRandom.hex(4)
-    check_hash_uniqueness(hash)
+    hash_uniqueness(hash)
   end
 
-  def check_hash_uniqueness(generated_hash)
-    @url = Url.find_by(short_url: "https://short.is/#{generated_hash}")
+  def hash_uniqueness(generated_hash)
+    @url = Url.find_by(shortened: "https://short.is/#{generated_hash}")
 
     if @url
-      create_hash
+      hash
     else
-      generate_hash(generated_hash)
+      generate_shortened(generated_hash)
     end
   end
 
-  def generate_hash(generated_hash)
-    self.short_url = "https://short.is/#{generated_hash}"
+  def generate_shortened(generated_hash)
+    self.shortened = "https://short.is/#{generated_hash}"
   end
 
 end
