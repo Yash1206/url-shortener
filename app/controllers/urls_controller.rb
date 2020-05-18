@@ -1,4 +1,9 @@
 class UrlsController < ApplicationController
+
+  def index
+    
+  end
+
   def encode
     @url = Url.find_by(url_params)
     if @url
