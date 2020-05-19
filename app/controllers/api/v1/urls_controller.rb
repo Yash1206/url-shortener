@@ -35,6 +35,8 @@ class Api::V1::UrlsController < ApplicationController
     if @url.update(url_params)
       @url_list = Url.order(pinned: :desc, updated_at: :desc)
       render status: :ok, json: { list: @url_list }
+    else
+      render status: :unprocessable_entity, json: { error: "Error updating url." }
     end
   end
 
