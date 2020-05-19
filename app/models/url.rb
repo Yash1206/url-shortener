@@ -7,22 +7,9 @@ class Url < ApplicationRecord
   private
 
   def hash
-    hash = SecureRandom.hex(4)
-    hash_uniqueness(hash)
-  end
-
-  def hash_uniqueness(generated_hash)
-    @url = Url.find_by(shortened: "https://short.is/#{generated_hash}")
-
-    if @url
-      hash
-    else
-      generate_shortened(generated_hash)
+    loop do
+      self.shortened = SecureRandom.hex(4)
+      break unless Url.exists?( shortened: self.shortened )
     end
   end
-
-  def generate_shortened(generated_hash)
-    self.shortened = "https://short.is/#{generated_hash}"
-  end
-
 end

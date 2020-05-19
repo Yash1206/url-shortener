@@ -1,10 +1,12 @@
-class UrlsController < ApplicationController
+class Api::V1::UrlsController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def index
-    
+    @urls = Url.order(updated_at: :desc)
+    render json: @urls
   end
 
-  def encode
+  def create
     @url = Url.find_by(url_params)
     if @url
       render status: :ok, json: { shortened: @url.shortened }
@@ -18,8 +20,8 @@ class UrlsController < ApplicationController
     end
   end
 
-  def decode
-    @url = Url.find_by_shortened(params[:url][:shortened])
+  def show
+    @url = Url.find_by_shortened(params[:short_url])
     if @url
       render status: :ok, json: { original: @url.original }
     else
