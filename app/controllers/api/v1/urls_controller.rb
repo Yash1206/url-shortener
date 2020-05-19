@@ -1,5 +1,5 @@
 class Api::V1::UrlsController < ApplicationController
-  before_action :fetch_urls, only: [:index, :update]
+  before_action :fetch_urls, only: [:index]
   skip_before_action :verify_authenticity_token
 
   def index
@@ -33,7 +33,8 @@ class Api::V1::UrlsController < ApplicationController
   def update
     @url = Url.find_by(shortened: params[:shortened])
     if @url.update(url_params)
-      render status: :ok, json: { list: fetch_urls }
+      @url_list = Url.order(pinned: :desc, updated_at: :desc)
+      render status: :ok, json: { list: @url_list }
     end
   end
 
