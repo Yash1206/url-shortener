@@ -7,21 +7,3 @@ Rails.application.routes.draw do
   root 'static#index'
   get '/*path' => 'static#index'
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
