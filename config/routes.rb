@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  root 'urls#index'
-  resources :urls
-  post '/encode' => "urls#encode"
-  get '/decode' => "urls#decode"
+  namespace :api do
+    namespace :v1 do
+      resources :urls, only: [:create, :show], param: :short
+    end
+  end
 end
