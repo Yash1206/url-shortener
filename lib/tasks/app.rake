@@ -2,11 +2,11 @@ namespace :app do
   session = ActionDispatch::Integration::Session.new(Rails.application)
   desc "This task encodes short_url"
   task :encode => :environment do
-    session.post "http://localhost:3000/encode", params: { "url": { "original": ENV['URL'] } }
+    session.post "http://localhost:3000/api/v1/urls", params: { "url": { "original": ENV['URL'] } }
     response = JSON.parse(session.response.body)
     response_status = session.response.status
       if response_status == 200
-        puts "The shortened url of #{ENV["URL"]} is #{response["shortened"]}."
+        puts "The shortened url of #{ENV["URL"]} is https://short.is/#{response["shortened"]}."
       else
         puts response["errors"]
       end
@@ -14,8 +14,8 @@ namespace :app do
 
   desc "This task decodes full_url from the provided short_url"
   task :decode => :environment do
-    short_url = ENV['SHORTURL']
-    session.get "http://localhost:3000/decode", params: { "url": { "shortened": short_url } }
+    short = ENV['SHORTURL'].last(8)
+    session.get "http://localhost:3000/api/v1/urls/#{short}"
     response = JSON.parse(session.response.body)
     response_status = session.response.status
     if response_status == 200
