@@ -14,8 +14,8 @@ namespace :app do
 
   desc "This task decodes full_url from the provided short_url"
   task :decode => :environment do
-    short = ENV['SHORTURL'].last(8)
-    session.get "http://localhost:3000/api/v1/urls/#{short}"
+    shortened = ENV['SHORTURL'].last(8)
+    session.get "http://localhost:3000/api/v1/urls/#{shortened}"
     response = JSON.parse(session.response.body)
     response_status = session.response.status
     if response_status == 200
