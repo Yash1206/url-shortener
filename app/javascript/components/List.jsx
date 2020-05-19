@@ -11,7 +11,7 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const url = "api/v1/urls/index";
+    const url = "api/v1/urls";
     fetch(url)
       .then((response) => {
         if (response.ok) {
@@ -27,15 +27,15 @@ class List extends Component {
   handleClick(shortened, index) {
     const url = `/api/v1/urls/${shortened}`;
     fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').content,
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": document.querySelector('[name="csrf-token"]').content,
       },
       body: JSON.stringify({ url: { pinned: !this.state.list[index].pinned } }),
     })
-      .then(res => res.json())
-      .then(res => this.setState({ list: res.list }));
+      .then((res) => res.json())
+      .then((res) => this.setState({ list: res.list }));
   }
 
   render() {
