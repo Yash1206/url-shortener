@@ -1,9 +1,10 @@
 class Api::V1::UrlsController < ApplicationController
+  before_action :fetch_urls, only: [:index, :update]
   skip_before_action :verify_authenticity_token
 
   def index
     @urls = Url.order(updated_at: :desc)
-    render json: @urls
+    render json: fetch_urls
   end
 
   def create
@@ -11,7 +12,7 @@ class Api::V1::UrlsController < ApplicationController
     if @url
       render status: :ok, json: { shortened: @url.shortened }
     else
-      @url = Url.new(url_params)
+      @url = Url.create(url_params)
       if @url.save
         render status: :ok, json: { shortened: @url.shortened }
       else
@@ -21,7 +22,7 @@ class Api::V1::UrlsController < ApplicationController
   end
 
   def show
-    @url = Url.find_by_shortened(params[:short_url])
+    @url = Url.find_by_shortened(params[:shortened])
     if @url
       render status: :ok, json: { original: @url.original }
     else
@@ -29,10 +30,21 @@ class Api::V1::UrlsController < ApplicationController
     end
   end
 
+  def update
+    @url = Url.find_by(shortened: params[:shortened])
+    if @url.update(url_params)
+      render status: :ok, json: { list: fetch_urls }
+    end
+  end
+
   private
 
   def url_params
-    params.require(:url).permit(:original)
+    params.require(:url).permit(:original, :shortened, :pinned)
+  end
+
+  def fetch_urls
+    @urls = Url.order(pinned: :desc, updated_at: :desc)
   end
 
 end
