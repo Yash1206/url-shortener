@@ -7,13 +7,7 @@ urls = [
   "http://www.amazon.com",
   "http://www.wikipedia.org"
 ]
-# def hash
-  
-#     shortened = SecureRandom.hex(4)
-#     break shortened unless Url.where( shortened: shortened ).exists?
-  
-# end
 
 urls.each do |url|
-  Url.create(original: url, shortened: Url.hash, pinned: false)
+  Url.create(original: url, shortened: Url.generate_shortened, pinned: false)
 end
