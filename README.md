@@ -1,6 +1,6 @@
 # URL shortener API
 
-Live application with list of all shortened links: **[https://url-shortner-yash1206.herokuapp.com/](https://url-shortner-yash1206.herokuapp.com/)**
+Live application with a list of Url: **[https://url-shortner-yash1206.herokuapp.com/](https://url-shortner-yash1206.herokuapp.com/)**
 
 This is a url shortener API, build with Ruby On Rails 6.
 
@@ -40,22 +40,22 @@ Shorten URL:
 
 - EndPoint - `/url`, POST
 
-- Params - { "url": { "full_url": "https://url.com" } }
+- Params - { "url": { "original": "https://url.com" } }
 
 Get Full URL from shortened one:
 
 - EndPoint - `/show`, GET
 
-- Params - { "url": { "short_url": "https://short.is/#{hex}" } }
+- Params - { "url": { "shortened": "https://short.is/#{hex}" } }
 
 ### Implementation
 
-- All the Urls have an attribute named `pinned` which is `false` by default.
+- All Urls have an attribute named `pinned` set to `false` by default.
 
-- When a user clicks on a pin, the `pinned` attribute changes to `true`.
+- When a user clicks on a pin icon, the `pinned` attribute for the particular Url changes to `true`.
 
-- The list is ordered in descending order according to their `updated_at` time.
+- List of Url is ordered in descending order according to their `updated_at` time.
 
 - The last pinned Url will move to the top.
 
-- When clicked on the pin again, the Url will move below the pinned Urls.
+- When clicked on the pin again, Url will move below pinned Urls.
