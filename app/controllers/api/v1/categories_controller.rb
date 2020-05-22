@@ -21,11 +21,13 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def update
-
-  end
-
-  def edit
-
+    @category = Category.find_by(category_params)
+    if @category.update(category_params)
+      @categories = Category.order(updated_at: :desc)
+      render status: :ok, json: { category_list: @categories }
+    else
+      render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+    end
   end
 
   def destroy
