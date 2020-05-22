@@ -1,6 +1,6 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :category_list, only: [:index]
-  before_action :category_params, only: [:create, :upadte, :destroy]
+  before_action :category_params, only: [:create, :update, :destroy]
 
   def index
     render json: category_list
