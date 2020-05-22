@@ -31,7 +31,12 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def destroy
-
+    @category = Category.find_by(category_params)
+    if @category.destroy
+      render status: :ok, json: { notice: "Category destroyed successfully" }
+    else
+      render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+    end
   end
 
   private
