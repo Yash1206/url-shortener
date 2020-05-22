@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   end
   root 'static#index'
   get '/*path' => 'static#index'
+  resources :categories, only: [:index, :create, :update, :destroy], param: :category
 end
