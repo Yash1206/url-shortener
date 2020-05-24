@@ -11,7 +11,7 @@ class Api::V1::CategoriesController < ApplicationController
   def create
     @category = Category.find_by(title: params[:title])
     if @category
-      render status: :ok, json: { category: @category, notice: "Provided category already exists, please input a new category." }
+      render status: :ok, json: { category: @category, message: "Provided category already exists, please input a new category." }
     else
       @category = Category.create(category_params)
       if @category.save
