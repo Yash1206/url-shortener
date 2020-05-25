@@ -51,17 +51,6 @@ class SingleCategory extends Component {
       });
   };
 
-  handleDelete = (id) => {
-    const url = `/api/v1/categories/${id}`;
-    fetch(url, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        this.props.history.push('/manage-categories')
-      });
-  };
-
   render() {
     const { title } = this.state;
     return (
@@ -112,7 +101,7 @@ class SingleCategory extends Component {
             </td>
             <td>
               <button
-                onClick={() => this.handleDelete(this.state.category.id)}
+                onClick={() => this.props.handleDelete(this.state.category.id)}
                 className="btn btn-secondary"
               >
                 Delete
