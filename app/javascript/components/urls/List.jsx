@@ -39,9 +39,7 @@ class List extends Component {
   }
 
   render() {
-    console.log(this.state);
     const url_list = this.state.list && this.state.list;
-    console.log(url_list);
     return (
       <>
         <div className="table_container">
@@ -51,6 +49,7 @@ class List extends Component {
                 <th scope="col">Pin</th>
                 <th scope="col">Original</th>
                 <th scope="col">Shortened</th>
+                <th scope="col">Category</th>
               </tr>
             </thead>
             <tbody>

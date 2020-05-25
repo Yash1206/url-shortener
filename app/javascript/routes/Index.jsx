@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import List from "../components/List";
-import ManageCategories from "../components/ManageCategories";
+import ManageCategories from "../components/categories/ManageCategories";
+import List from "../components/urls/List";
 
 export default (
   <Router>
