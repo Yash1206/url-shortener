@@ -10,7 +10,7 @@ class CategoryForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const category = {
       title: this.state.categoryTitle,
     };
@@ -37,7 +37,7 @@ class CategoryForm extends Component {
       <>
         <form>
           <div className="form-group">
-            <label htmlFor="inputCategoryTitle">Add Category</label>
+            <h1 className="d-flex justify-content-center">Add Category</h1>
             <input
               type="text"
               className="form-control"
@@ -47,13 +47,15 @@ class CategoryForm extends Component {
               name="categoryTitle"
             />
           </div>
-          <button
-            type="submit"
-            onClick={this.handleSubmit}
-            className="btn btn-primary"
-          >
-            Submit
-          </button>
+          <div className="d-flex justify-content-center">
+            <button
+              type="submit"
+              onClick={this.handleSubmit}
+              className="btn btn-secondary"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </>
     );
