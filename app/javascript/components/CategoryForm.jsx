@@ -10,10 +10,10 @@ class CategoryForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    
     const category = {
       title: this.state.categoryTitle,
     };
-    console.log(category, "jjjj");
 
     const url = "/api/v1/categories/";
     fetch(url, {
