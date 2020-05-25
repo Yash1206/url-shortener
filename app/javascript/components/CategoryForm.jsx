@@ -5,9 +5,21 @@ class CategoryForm extends Component {
     super();
     this.state = {
       categoryTitle: "",
+      errors: "",
     };
   }
 
+  handleResponse = (response) => {
+    if (response.status == 200) {
+      this.props.loadCategories();
+    } else {
+      response.json().then((err) => {
+        this.setState({
+          errors: err.errors,
+        });
+      });
+    }
+  };
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,9 +34,9 @@ class CategoryForm extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(category),
-    })
-      .then((response) => console.log(response.json()))
-      .catch((errors) => console.log(errors));
+    }).then((response) => {
+      this.handleResponse(response);
+    });
   };
 
   handleChange = (e) => {
@@ -35,6 +47,7 @@ class CategoryForm extends Component {
   render() {
     return (
       <>
+        {this.state.errors && <h1>{this.state.errors[0]}</h1>}
         <form>
           <div className="form-group">
             <h1 className="d-flex justify-content-center">Add Category</h1>
