@@ -1,11 +1,10 @@
 class Api::V1::CategoriesController < ApplicationController
-  before_action :category_list, only: [:index, :update]
+  before_action :category_list, only: [:index, :destroy]
   before_action :category_params, only: [:create, :update]
   skip_before_action :verify_authenticity_token
 
   def index
-    @categories = Category.all
-    render json: @categories
+    render json: category_list
   end
 
   def create
@@ -23,17 +22,16 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.find_by(title: params[:title])
+    @category = Category.find_by(id: params[:id])
     if @category.update(category_params)
-      @categories = Category.order(updated_at: :desc)
-      render status: :ok, json: { category_list: category_list }
+      render status: :ok, json: { category: @category }
     else
       render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
     end
   end
 
   def destroy
-    @category = Category.find_by(title: params[:title])
+    @category = Category.find_by(id: params[:id])
     if @category.destroy
       render status: :ok, json: { notice: "Category destroyed successfully" }
     else
@@ -44,10 +42,10 @@ class Api::V1::CategoriesController < ApplicationController
   private
 
   def category_list
-    Category.order(updated_at: :desc)
+    Category.order(created_at: :desc)
   end
 
   def category_params
-    params.require(:category).permit(:title)
+    params.require(:category).permit(:title, :id)
   end
 end
