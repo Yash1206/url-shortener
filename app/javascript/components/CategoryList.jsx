@@ -2,24 +2,20 @@ import React, { Component } from "react";
 import SingleCategory from "./SingleCategory";
 
 class CategoryList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      categoryList: null,
-    };
-  }
-
-  componentDidMount() {
-    const url = "/api/v1/categories";
-    fetch(url)
+  handleDelete = (id) => {
+    const url = `/api/v1/categories/${id}`;
+    fetch(url, {
+      method: "DELETE",
+    })
       .then((response) => response.json())
       .then((response) => {
-        this.setState({ categoryList: response });
+        this.props.loadCategories();
       });
-  }
+  };
 
   render() {
-    const category_list = this.state.categoryList;
+    let category_list = this.props.categoryList;
+    console.log(category_list, "in render");
     return (
       <div className="table_container">
         <table className="table">
@@ -32,11 +28,11 @@ class CategoryList extends Component {
           </thead>
           <tbody>
             {category_list &&
-              category_list.map((category, index) => (
+              category_list.map((category) => (
                 <SingleCategory
                   category={category}
                   handleDelete={this.handleDelete}
-                  key={index}
+                  key={category.id}
                 />
               ))}
           </tbody>
