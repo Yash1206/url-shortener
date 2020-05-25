@@ -9,5 +9,5 @@ urls = [
 ]
 
 urls.each do |url|
-  Url.create(original: url, shortened: Url.generate_shortened, pinned: false)
+  Url.create!(original: url)
 end
