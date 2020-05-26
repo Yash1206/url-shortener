@@ -3,21 +3,15 @@ class Api::V1::UrlsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @urls = Url.order(updated_at: :desc)
     render json: fetch_urls
   end
 
   def create
-    @url = Url.find_by(url_params)
-    if @url
+    @url = Url.new(url_params)
+    if @url.save
       render status: :ok, json: { shortened: @url.shortened }
     else
-      @url = Url.create(url_params)
-      if @url.save
-        render status: :ok, json: { shortened: @url.shortened }
-      else
-        render status: :unprocessable_entity, json: { errors: "Please input a valid url" }
-      end
+      render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
     end
   end
 
@@ -26,28 +20,34 @@ class Api::V1::UrlsController < ApplicationController
     if @url
       render status: :ok, json: { original: @url.original }
     else
-      render status: :not_found, json: { error: "Not found" }
+      render status: :not_found, json: { errors: "Url not found." }
     end
   end
 
   def update
-    @url = Url.find_by(shortened: params[:shortened])
+    @url = Url.find_by(id: params[:id])
     if @url.update(url_params)
-      @url_list = Url.order(pinned: :desc, updated_at: :desc)
-      render status: :ok, json: { list: @url_list }
+      render status: :ok, json: { notice: "Url updated successfully." }
     else
-      render status: :unprocessable_entity, json: { error: "Error updating url." }
+      render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
     end
   end
 
+  def destroy
+    @url = Url.find_by(id: params[:id])
+    if @url.destroy
+      render status: :ok, json: { notice: "Url deleted successfully." }
+    else
+      render status: :unprocessable_entity, json: { errors: @url.errors.full_messages}
+    end
+  end
   private
 
   def url_params
-    params.require(:url).permit(:original, :shortened, :pinned)
+    params.require(:url).permit(:original, :shortened, :pinned, :category_id)
   end
 
   def fetch_urls
     @urls = Url.order(pinned: :desc, updated_at: :desc)
   end
-
 end
