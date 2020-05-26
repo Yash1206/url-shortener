@@ -9,5 +9,5 @@ urls = [
 ]
 
 urls.each do |url|
-  Url.create!(original: url, category_id: 1)
+  Url.create!(original: url)
 end
