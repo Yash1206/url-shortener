@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class SingleCategory extends Component {
+class Category extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,34 +75,31 @@ class SingleCategory extends Component {
               <button
                 type="submit"
                 onClick={this.handleSubmit}
-                className="btn btn-secondary"
+                className="btn btn-link"
               >
                 Submit
               </button>
             </td>
             <td>
-              <button onClick={this.handleEdit} className="btn btn-secondary">
+              <button onClick={this.handleEdit} className="btn btn-link">
                 Cancel
               </button>
             </td>
           </>
         ) : (
           <>
-            <th
-              scope="row"
-              style={{ cursor: "pointer" }}
-            >
+            <th scope="row" style={{ cursor: "pointer" }}>
               {title}
             </th>
             <td>
-              <button onClick={this.handleEdit} className="btn btn-secondary">
+              <button onClick={this.handleEdit} className="btn btn-link">
                 Edit
               </button>
             </td>
             <td>
               <button
                 onClick={() => this.props.handleDelete(this.state.category.id)}
-                className="btn btn-secondary"
+                className="btn btn-link"
               >
                 Delete
               </button>
@@ -114,4 +111,4 @@ class SingleCategory extends Component {
   }
 }
 
-export default SingleCategory;
+export default Category;

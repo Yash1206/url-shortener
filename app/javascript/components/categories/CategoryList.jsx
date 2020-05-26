@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SingleCategory from "./SingleCategory";
+import Category from "./Category";
 
 class CategoryList extends Component {
   handleDelete = (id) => {
@@ -15,9 +15,8 @@ class CategoryList extends Component {
 
   render() {
     let category_list = this.props.categoryList;
-    console.log(category_list, "in render");
     return (
-      <div className="table_container">
+      <div style={{ paddingTop: "1rem" }} className="table_container">
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -29,7 +28,7 @@ class CategoryList extends Component {
           <tbody>
             {category_list &&
               category_list.map((category) => (
-                <SingleCategory
+                <Category
                   category={category}
                   handleDelete={this.handleDelete}
                   key={category.id}

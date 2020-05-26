@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import List from "../components/List";
-import ManageCategories from "../components/ManageCategories";
+import ManageCategories from "../components/categories/ManageCategories";
+import ManageUrls from "../components/urls/ManageUrls";
 
 export default (
   <Router>
     <Switch>
-      <Route path="/" exact component={List} />
-      <Route path="/manage-categories" exact component={ManageCategories} />
+      <Route path="/" exact component={ManageUrls} />
+      <Route path="/categories" exact component={ManageCategories} />
     </Switch>
   </Router>
 );

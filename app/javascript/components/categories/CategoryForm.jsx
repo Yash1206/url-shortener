@@ -5,24 +5,11 @@ class CategoryForm extends Component {
     super();
     this.state = {
       categoryTitle: "",
-      errors: "",
     };
   }
 
-  handleResponse = (response) => {
-    if (response.status == 200) {
-      this.props.loadCategories();
-    } else {
-      response.json().then((err) => {
-        this.setState({
-          errors: err.errors,
-        });
-      });
-    }
-  };
   handleSubmit = (e) => {
     e.preventDefault();
-
     const category = {
       title: this.state.categoryTitle,
     };
@@ -35,7 +22,7 @@ class CategoryForm extends Component {
       },
       body: JSON.stringify(category),
     }).then((response) => {
-      this.handleResponse(response);
+      this.props.handleResponse(response);
     });
   };
 
@@ -47,10 +34,29 @@ class CategoryForm extends Component {
   render() {
     return (
       <>
-        {this.state.errors && <h1>{this.state.errors[0]}</h1>}
+        {this.props.state.errors &&
+          this.props.state.errors.map((error, i) => {
+            return (
+              <div style={{ paddingTop: "1rem" }} key={i}>
+                <div
+                  className="alert alert-warning alert-dismissible fade show"
+                  role="alert"
+                >
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <strong>{error}</strong>
+                </div>
+              </div>
+            );
+          })}
         <form>
           <div className="form-group">
-            <h1 className="d-flex justify-content-center">Add Category</h1>
             <input
               type="text"
               className="form-control"
@@ -60,11 +66,11 @@ class CategoryForm extends Component {
               name="categoryTitle"
             />
           </div>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-end">
             <button
               type="submit"
               onClick={this.handleSubmit}
-              className="btn btn-secondary"
+              className="btn btn-link justify-content-end"
             >
               Submit
             </button>
