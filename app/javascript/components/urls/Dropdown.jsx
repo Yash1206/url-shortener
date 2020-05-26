@@ -38,14 +38,17 @@ class Dropdown extends Component {
         {categoryList &&
           categoryList.map((category) => {
             return (
-              <a
-                style={{cursor: "pointer"}}
-                key={category.id}
-                onClick={() => this.handleEdit(category.id)}
-                className="dropdown-item"
-              >
-                {category.title}
-              </a>
+              <>
+                <a
+                  style={{ cursor: "pointer", marginLeft: "0.5rem" }}
+                  key={category.id}
+                  onClick={() => this.handleEdit(category.id)}
+                  className="dropdown-item"
+                >
+                  {category.title}
+                </a>
+                <br />
+              </>
             );
           })}
       </div>
