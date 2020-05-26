@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_073407) do
+ActiveRecord::Schema.define(version: 2020_05_26_092859) do
 
   create_table "categories", force: :cascade do |t|
     t.string "title", null: false
@@ -30,4 +30,5 @@ ActiveRecord::Schema.define(version: 2020_05_22_073407) do
     t.index ["original", "shortened"], name: "index_urls_on_original_and_shortened", unique: true
   end
 
+  add_foreign_key "urls", "categories"
 end
