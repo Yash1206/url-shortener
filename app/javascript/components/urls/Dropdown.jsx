@@ -40,7 +40,7 @@ class Dropdown extends Component {
             return (
               <>
                 <a
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", marginLeft: "0.5rem" }}
                   key={category.id}
                   onClick={() => this.handleEdit(category.id)}
                   className="dropdown-item"
