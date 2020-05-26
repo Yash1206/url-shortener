@@ -1,6 +1,6 @@
 # URL shortener API
 
-Live application with a list of Url: **[https://url-shortner-yash1206.herokuapp.com/](https://url-shortner-yash1206.herokuapp.com/)**
+Live application with a list of Url: **[https://url-shortener-yash1206.herokuapp.com/](https://url-shortener-yash1206.herokuapp.com/)**
 
 This is a url shortener API, build with Ruby On Rails 6.
 
@@ -59,3 +59,10 @@ Get Full URL from shortened one:
 - The last pinned Url will move to the top.
 
 - When clicked on the pin again, Url will move below pinned Urls.
+
+- '/categories' has CRUD operations for categories.
+
+- Root has CRUD operations for Urls.
+
+- When clicked on a different category in the dropdown menu in Url List, the Url gets updated with the id of the particular category.
+
