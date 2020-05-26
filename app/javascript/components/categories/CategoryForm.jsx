@@ -22,6 +22,9 @@ class CategoryForm extends Component {
       },
       body: JSON.stringify(category),
     }).then((response) => {
+      this.setState({
+        categoryTitle: "",
+      });
       this.props.handleResponse(response);
     });
   };
