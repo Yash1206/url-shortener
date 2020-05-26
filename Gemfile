@@ -5,6 +5,8 @@ ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
+gem 'jquery-rails'
+gem 'bootstrap-sass'
 gem 'sqlite3', '~>1.4', :group => [:development,:test]
 gem 'pg', :group => [:production]
 # Use Puma as the app server
