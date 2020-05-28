@@ -18,20 +18,28 @@ class Api::V1::CategoriesController < ApplicationController
 
   def update
     @category = Category.find_by(id: params[:id])
-    if @category.update(category_params)
-      render status: :ok, json: { category: @category }
-    else
-      render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+    if @category
+      if @category.update(category_params)
+        render status: :ok, json: { category: @category }
+      else
+        render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+      end
+    else 
+      render status: :not_found, json: { errors: "Url not found."}
     end
   end
 
   def destroy
     @category = Category.find_by(id: params[:id])
-    if @category.destroy
-      categories = @categories
-      render status: :ok, json: { notice: "Category destroyed successfully", category_list: categories }
+    if @category
+      if @category.destroy
+        categories = @categories
+        render status: :ok, json: { notice: "Category destroyed successfully", category_list: categories }
+      else
+        render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+      end
     else
-      render status: :unprocessable_entity, json: { errors: @category.errors.full_messages }
+      render status: :not_found, json: { errors: "Url not found."}
     end
   end
 

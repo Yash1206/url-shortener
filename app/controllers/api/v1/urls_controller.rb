@@ -26,19 +26,27 @@ class Api::V1::UrlsController < ApplicationController
 
   def update
     @url = Url.find_by(id: params[:id])
-    if @url.update(url_params)
-      render status: :ok, json: { notice: "Url updated successfully." }
+    if @url
+      if @url.update(url_params)
+        render status: :ok, json: { notice: "Url updated successfully." }
+      else
+        render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
+      end
     else
-      render status: :unprocessable_entity, json: { errors: @url.errors.full_messages }
+      render status: :not_found, json: { errors: "Url not found."}
     end
   end
 
   def destroy
     @url = Url.find_by(id: params[:id])
-    if @url.destroy
-      render status: :ok, json: { notice: "Url deleted successfully." }
+    if @url
+      if @url.destroy
+        render status: :ok, json: { notice: "Url deleted successfully." }
+      else
+        render status: :unprocessable_entity, json: { errors: @url.errors.full_messages}
+      end
     else
-      render status: :unprocessable_entity, json: { errors: @url.errors.full_messages}
+      render status: :not_found, json: { errors: "Url not found."}
     end
   end
   private
